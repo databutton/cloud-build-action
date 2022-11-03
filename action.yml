@@ -9,7 +9,7 @@ inputs:
     default: "true"
   cache_ttl:
     description: "ttl for the kaniko cache, default is 7 days"
-    default: 168h
+    default: "168"
   extra_args:
     description: "extra args that will be passed onto gcloud builds submit"
     required: false
