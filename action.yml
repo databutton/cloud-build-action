@@ -23,8 +23,8 @@ runs:
       shell: bash
     - run: >
         gcloud
-          builds
-          submit
-          --tag ${{ inputs.image_tag }}
-          ${{ inputs.extra_args }}
+        builds
+        submit
+        --tag ${{ inputs.image_tag }}
+        ${{ inputs.extra_args }}
       shell: bash
