@@ -1,0 +1,30 @@
+name: Cloud build action
+description: Cloud build action with support for kaniko
+inputs:
+  image_tag: # full image
+    description: "full image tag"
+    required: true
+  cache:
+    description: "use kaniko for cache"
+    default: "true"
+  cache_ttl:
+    description: "ttl for the kaniko cache, default is 7 days"
+    default: 168h
+  extra_args:
+    description: "extra args that will be passed onto gcloud builds submit"
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - run: gcloud config set builds/use_kaniko True
+      if: ${{ inputs.cache }} == true
+      shell: bash
+    - run: gcloud config set builds/kaniko_cache_ttl ${{ inputs.cache_ttl }}
+      shell: bash
+    - run: >
+        gcloud
+          builds
+          submit
+          --tag ${{ inputs.image_tag }}
+          ${{ inputs.extra_args }}
+      shell: bash
